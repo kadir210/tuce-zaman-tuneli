@@ -9,19 +9,53 @@
 </head>
 <body>
   <div class="container">
-    <h2>🕰️ Tuğçe Zaman Tüneli</h2>
-    <p>Butonu aktifleştirmek için şifreyi gir (kalan hak: <span id="tries">3</span>)</p>
-    <input type="password" id="pwd" placeholder="Şifreyi gir">
-    <br>
-    <button id="unlockBtn">🔒 Kilitli</button>
-  </div>
 
-  <div id="modal">
-    <div id="modalContent">
-      <video id="videoPlayer" width="480" controls></video>
+    <!-- Aşama 1: İlk tanışma -->
+    <div class="stage active" id="stage1">
+      <h2>💌 İlk tanıştığımız yer</h2>
+      <p>Hangi parkta tanıştık?</p>
+      <input type="text" id="answer1" placeholder="Cevabını yaz">
+      <button class="nextBtn" data-stage="1">Gönder</button>
+      <p class="status" id="status1"></p>
     </div>
-  </div>
 
+    <!-- Aşama 2: Kısa mektup / romantik mesaj -->
+    <div class="stage" id="stage2">
+      <h2>💖 Küçük bir mektup</h2>
+      <p>Sevgilim, o gün seninle tanıştığım anı hiç unutmadım. ❤️</p>
+      <button class="nextBtn" data-stage="2">Sonraki</button>
+      <p class="status" id="status2"></p>
+    </div>
+
+    <!-- Aşama 3: Kıyafet rengi -->
+    <div class="stage" id="stage3">
+      <h2>👗 Kıyafet Rengi</h2>
+      <p>O gün giydiğin elbisenin rengi neydi?</p>
+      <input type="text" id="answer3" placeholder="Cevabını yaz">
+      <button class="nextBtn" data-stage="3">Gönder</button>
+      <p class="status" id="status3"></p>
+    </div>
+
+    <!-- Aşama 4: Sürpriz Butonlar -->
+    <div class="stage" id="stage4">
+      <h2>🔒 Sürprizi Aç</h2>
+      <p>Doğru şifreyi girerek butonları açabilirsin (Kalan hak: <span id="tries">3</span>)</p>
+      <input type="password" id="pwd" placeholder="Şifreyi gir">
+      <div class="button-group">
+        <button class="unlockBtn" data-key="tuce2025">🔒 Buton 1</button>
+        <button class="unlockBtn" data-key="flower33">🔒 Buton 2</button>
+        <button class="unlockBtn" data-key="magic77">🔒 Buton 3</button>
+      </div>
+      <p class="status" id="status4"></p>
+    </div>
+
+    <!-- Son Aşama -->
+    <div class="stage" id="stage5">
+      <h2>🎉 Tebrikler!</h2>
+      <p>Her aşamayı geçtin, sevgilim. ❤️</p>
+    </div>
+
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
