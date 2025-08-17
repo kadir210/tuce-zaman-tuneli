@@ -1,48 +1,107 @@
-// Şifreler ve videolar
-const passwords = {
-  "tuce2025": "https://example.com/video.mp4",
-  "flower33": "https://example.com/another.mp4"
-};
+document.addEventListener("DOMContentLoaded", function(){
 
-let attemptsLeft = 3;
-const pwdInput    = document.getElementById("pwd");
-const unlockBtn   = document.getElementById("unlockBtn");
-const triesSpan   = document.getElementById("tries");
-const modal       = document.getElementById("modal");
-const videoPlayer = document.getElementById("videoPlayer");
+  const stages = document.querySelectorAll(".stage");
+  let attemptsLeft = 3;
 
-// Buton tıklama
-unlockBtn.addEventListener("click", function() {
-  const value = pwdInput.value.trim();
+  const unlockBtns = document.querySelectorAll(".unlockBtn");
+  const triesSpan = document.getElementById("tries");
 
-  if (passwords[value]) {
-    unlockBtn.textContent = "🔓 Açıldı";
-    unlockBtn.classList.add("active");
-    videoPlayer.src = passwords[value];
-    modal.style.display = "flex";  // popup aç
-  } 
-  else {
-    attemptsLeft--;
-    triesSpan.textContent = attemptsLeft;
+  // Başlangıçta sadece stage1 aktif
+  stages.forEach(s => s.classList.remove("active"));
+  document.getElementById("stage1").classList.add("active");
 
-    // Titreşim animasyonu
-    pwdInput.style.animation = "shake 0.3s";
-    setTimeout(() => { pwdInput.style.animation = ""; }, 300);
+  // Stage butonları
+  document.querySelectorAll(".nextBtn").forEach(btn => {
+    btn.addEventListener("click", function(){
+      const stageNum = parseInt(btn.dataset.stage);
+      if(stageNum === 1){
+        checkAnswer("answer1", "park", stageNum);
+      } else if(stageNum === 3){
+        checkAnswer("answer3", "kırmızı", stageNum);
+      } else {
+        moveNext(stageNum);
+      }
+    });
+  });
 
-    if (attemptsLeft <= 0) {
-      unlockBtn.disabled = true;
-      alert("Tüm haklar bitti!");
-    } 
-    else {
-      alert("Şifre yanlış!");
+  // Enter tuşu ile de geçiş
+  ["answer1","answer3","pwd"].forEach(id => {
+    const input = document.getElementById(id);
+    if(input){
+      input.addEventListener("keypress", function(e){
+        if(e.key === "Enter"){
+          e.preventDefault();
+          document.querySelector(`#stage${currentStage} .nextBtn`)?.click();
+        }
+      });
+    }
+  });
+
+  // Şifreli butonlar
+  unlockBtns.forEach(btn => {
+    btn.addEventListener("click", function(){
+      const entered = normalize(document.getElementById("pwd").value.trim());
+      const key = normalize(btn.dataset.key);
+      const status4 = document.getElementById("status4");
+
+      if(entered === key){
+        btn.textContent = "🔓 Açıldı!";
+        btn.classList.add("active");
+        status4.textContent = "Doğru şifre!";
+      } else {
+        attemptsLeft--;
+        triesSpan.textContent = attemptsLeft;
+        const pwdInput = document.getElementById("pwd");
+        pwdInput.style.animation = "shake 0.3s";
+        setTimeout(()=>{ pwdInput.style.animation=""; },300);
+        status4.textContent = attemptsLeft <=0 ? "Tüm haklar bitti!" : "Yanlış şifre!";
+        if(attemptsLeft <=0){
+          unlockBtns.forEach(b => b.disabled = true);
+        }
+      }
+    });
+  });
+
+  // Fonksiyonlar
+  let currentStage = 1;
+
+  function checkAnswer(inputId, correct, stageNum){
+    const ans = normalize(document.getElementById(inputId).value.trim());
+    if(ans === normalize(correct)){
+      moveNext(stageNum);
+    } else {
+      wrongAnswer(stageNum);
     }
   }
-});
 
-// Modal kapatma
-modal.addEventListener("click", function(e){
-  if (e.target === modal) {
-    modal.style.display = "none";
-    videoPlayer.pause();
+  function moveNext(stageNum){
+    document.getElementById("stage"+stageNum).classList.remove("active");
+    const nextStage = stageNum + 1;
+    const nextEl = document.getElementById("stage"+nextStage);
+    if(nextEl) nextEl.classList.add("active");
+    currentStage = nextStage;
   }
+
+  function wrongAnswer(stageNum){
+    const status = document.getElementById("status"+stageNum);
+    status.textContent = "Yanlış cevap!";
+    const input = document.querySelector("#stage"+stageNum+" input");
+    if(input){
+      input.style.animation = "shake 0.3s";
+      setTimeout(()=>{ input.style.animation=""; },300);
+    }
+  }
+
+  // Türkçe karakterleri normalize eden fonksiyon
+  function normalize(str){
+    return str
+      .toLowerCase()
+      .replace(/ç/g,'c')
+      .replace(/ğ/g,'g')
+      .replace(/ı/g,'i')
+      .replace(/ö/g,'o')
+      .replace(/ş/g,'s')
+      .replace(/ü/g,'u');
+  }
+
 });
