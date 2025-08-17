@@ -1,70 +1,21 @@
 body {
   font-family: 'Poppins', sans-serif;
-  background: url('https://example.com/romantic-background.jpg') no-repeat center/cover;
-  background-size: cover;
-  text-align: center;
-  padding: 30px;
+  background: #fff0f5;
   color: #333;
-}
-
-h2 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 36px;
-  color: #800000;
-  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
 }
 
 .container {
-  max-width: 600px;
-  margin: 0 auto;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-}
-
-input[type="text"], input[type="password"] {
-  padding: 10px;
-  width: 70%;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  margin-top: 10px;
-}
-
-button {
-  padding: 10px 20px;
-  margin-top: 15px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background: #ccc;
-  font-weight: 600;
-  transition: transform 0.2s;
-}
-
-button.active {
-  background: #008080;
-  color: #fff;
-  transform: translate(10px, 10px);
-}
-
-.button-group {
-  position: relative;
-  margin-top: 20px;
-  height: 60px;
-}
-
-.button-group button {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.status {
-  margin-top: 10px;
-  font-weight: bold;
-  color: #800000;
+  width: 90%;
+  max-width: 700px;
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
 }
 
 .stage {
@@ -73,6 +24,47 @@ button.active {
 
 .stage.active {
   display: block;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff69b4;
+  color: white;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #ff1493;
+}
+
+.status {
+  margin-top: 10px;
+  color: red;
+  font-weight: bold;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.unlockBtn.active {
+  background-color: #32cd32;
 }
 
 @keyframes shake {
