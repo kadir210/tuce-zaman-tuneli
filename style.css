@@ -1,73 +1,84 @@
 body {
   font-family: 'Poppins', sans-serif;
-  background:url('https://example.com/romantic-background.jpg') no-repeat center/cover;
-  text-align:center;
-  padding:30px;
+  background: url('https://example.com/romantic-background.jpg') no-repeat center/cover;
+  background-size: cover;
+  text-align: center;
+  padding: 30px;
+  color: #333;
 }
 
 h2 {
-  font-family:'Great Vibes', cursive;
-  font-size:40px;
+  font-family: 'Great Vibes', cursive;
+  font-size: 36px;
+  color: #800000;
+  margin-bottom: 15px;
 }
 
 .container {
-  max-width: 540px;
-  margin:0 auto;
-  background:rgba(255,255,255,0.9);
-  padding:20px;
-  border-radius:12px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+  max-width: 600px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
-input[type="password"] {
-  padding:10px;
-  width:70%;
-  border-radius:6px;
-  border:1px solid #ccc;
-  animation:fadein 1s ease;
-}
-
-@keyframes fadein {
-  from {opacity:0;} 
-  to   {opacity:1;}
+input[type="text"], input[type="password"] {
+  padding: 10px;
+  width: 70%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-top: 10px;
 }
 
 button {
-  padding:10px 20px;
-  border:none;
-  margin-top:10px;
-  border-radius:6px;
-  cursor:pointer;
-  background:#ccc;
+  padding: 10px 20px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #ccc;
+  font-weight: 600;
+  transition: transform 0.2s;
 }
 
 button.active {
-  background:#008080;
+  background: #008080;
+  color: #fff;
+  transform: translate(10px, 10px);
 }
 
-#modal {
-  display:none;
-  position:fixed;
-  top:0; left:0;
-  width:100%; 
-  height:100%;
-  background:rgba(0,0,0,0.6);
-  justify-content:center;
-  align-items:center;
-  z-index:99;
+.button-group {
+  position: relative;
+  margin-top: 20px;
+  height: 60px;
 }
 
-#modalContent {
-  background:#fff;
-  padding:20px;
-  border-radius:8px;
+.button-group button {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-/* Shake animasyonu */
+.status {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #800000;
+}
+
+.stage {
+  display: none;
+}
+
+.stage.active {
+  display: block;
+}
+
 @keyframes shake {
-  0% {transform: translateX(0);}
-  25% {transform: translateX(-5px);}
-  50% {transform: translateX(5px);}
-  75% {transform: translateX(-5px);}
-  100% {transform: translateX(0);}
-    }
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
