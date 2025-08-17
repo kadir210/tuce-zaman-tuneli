@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function(){
 
   const stages = document.querySelectorAll(".stage");
-  let attemptsLeft = 3;
-
   const unlockBtns = document.querySelectorAll(".unlockBtn");
   const triesSpan = document.getElementById("tries");
+  let currentStage = 1;
+  let attemptsLeft = 3;
 
   // Başlangıçta sadece stage1 aktif
   stages.forEach(s => s.classList.remove("active"));
@@ -15,23 +15,28 @@ document.addEventListener("DOMContentLoaded", function(){
     btn.addEventListener("click", function(){
       const stageNum = parseInt(btn.dataset.stage);
       if(stageNum === 1){
-        checkAnswer("answer1", "park", stageNum);
+        checkAnswer("answer1", "sincap gözlerin", stageNum);
       } else if(stageNum === 3){
-        checkAnswer("answer3", "kırmızı", stageNum);
+        checkAnswer("answer3", "romantik", stageNum);
       } else {
         moveNext(stageNum);
       }
     });
   });
 
-  // Enter tuşu ile de geçiş
+  // Enter tuşu ile geçiş
   ["answer1","answer3","pwd"].forEach(id => {
     const input = document.getElementById(id);
     if(input){
       input.addEventListener("keypress", function(e){
         if(e.key === "Enter"){
           e.preventDefault();
-          document.querySelector(`#stage${currentStage} .nextBtn`)?.click();
+          if(currentStage === 4){
+            unlockBtns[0].click();
+          } else {
+            const btn = document.querySelector(`#stage${currentStage} .nextBtn`);
+            if(btn) btn.click();
+          }
         }
       });
     }
@@ -48,6 +53,15 @@ document.addEventListener("DOMContentLoaded", function(){
         btn.textContent = "🔓 Açıldı!";
         btn.classList.add("active");
         status4.textContent = "Doğru şifre!";
+
+        // Tüm butonlar aktif ise Stage5'e geç
+        const allActive = Array.from(unlockBtns).every(b => b.classList.contains("active"));
+        if(allActive){
+          document.getElementById("stage4").classList.remove("active");
+          document.getElementById("stage5").classList.add("active");
+          currentStage = 5;
+        }
+
       } else {
         attemptsLeft--;
         triesSpan.textContent = attemptsLeft;
@@ -61,9 +75,6 @@ document.addEventListener("DOMContentLoaded", function(){
       }
     });
   });
-
-  // Fonksiyonlar
-  let currentStage = 1;
 
   function checkAnswer(inputId, correct, stageNum){
     const ans = normalize(document.getElementById(inputId).value.trim());
@@ -92,14 +103,10 @@ document.addEventListener("DOMContentLoaded", function(){
     }
   }
 
-  // Türkçe karakterleri normalize eden fonksiyon
   function normalize(str){
-    return str
-      .toLowerCase()
-      .replace(/ç/g,'c')
-      .replace(/ğ/g,'g')
-      .replace(/ı/g,'i')
-      .replace(/ö/g,'o')
+    return str.toLowerCase()
+      .replace(/ç/g,'c').replace(/ğ/g,'g')
+      .replace(/ı/g,'i').replace(/ö/g,'o')
       .replace(/ş/g,'s')
       .replace(/ü/g,'u');
   }
